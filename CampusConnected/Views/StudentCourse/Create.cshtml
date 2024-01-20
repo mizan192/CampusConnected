@@ -1,0 +1,138 @@
+﻿@model CampusConnected.Models.StudentCourse
+
+@{
+    ViewData["Title"] = "Create";
+    var studentModel = ViewData["StudentModel"] as CampusConnected.Models.StudentCourse;
+    var allCourse = ViewData["AllCourses"] as List<String>;
+}
+
+<h1>Create</h1>
+
+<h4>StudentCourse</h4>
+<hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" id="createForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            
+
+            <div class="form-group">
+                <label asp-for="StudentId">Student ID</label>
+                <select asp-for="StudentId" asp-items="@(new SelectList(studentModel.StudentList,"Id", "StudentName"))">
+                    <option value="">-- Select Student --</option>
+                </select>
+            </div>
+
+         
+
+            <label>Select Course : </label>
+
+
+
+            <div class="form-group">
+                <label asp-for="CourseId">Course</label>
+                <select asp-for="CourseId" asp-items="@(new SelectList(studentModel.CourseList,"CId", "CourseName"))">
+                    <option value="">-- Select Course --</option>
+                </select>
+            </div>
+
+          @*  @foreach (var checkbox in Model.CourseList)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" 
+                    type="checkbox" 
+                    value="@checkbox.CourseName" 
+                    id="@checkbox.CId"
+                    name="CourseIds"
+                    checked="@checkbox.IsChecked"
+                    >
+                
+                    <label class="form-check-label" for="flexCheckDefault">
+                        @checkbox.CourseName
+                    </label>
+                </div>
+            }*@
+
+            @*<h4>Select Courses:</h4>
+            @for (int i = 0; i < Model.CourseList.Count; i++)
+            {
+                <div class="form-check">
+                    <input type="checkbox" asp-for="CourseList[i].IsChecked" />
+                    <label asp-for="CourseList[i].IsChecked" class="form-check-label"></label>
+                    <input type="hidden" asp-for="CourseList[i].CId" />
+                    <label asp-for="CourseList[i].CourseName" class="form-check-label"></label>
+                </div>
+            }*@
+
+            @*<button type="button" class="btn btn-primary" onclick="saveCourses()">Create</button>*@
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" onclick="saveCourses()" />
+            </div>
+
+
+        </form>
+        </div>
+
+        <div class="col-md-4">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Available Course</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var courseName in allCourse)
+                {
+                    <tr>
+                        <td>@courseName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        </div>
+
+    <div class="col-md-4">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Registered Course</th>
+                </tr>
+            </thead>
+            <tbody>
+               @* @foreach (var courseName in allCourse)
+                {*@
+                    <tr>
+                        @*<td>@courseName</td>*@
+                    </tr>
+                @*}*@
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+
+    </div>
+
+    
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+  
+
+}

@@ -1,0 +1,70 @@
+﻿@model CampusConnected.Models.StudentCourse
+
+@{
+    ViewData["Title"] = "Create";
+    var studentModel = ViewData["StudentModel"] as CampusConnected.Models.StudentCourse;
+    var allCourse = ViewData["AllCourses"] as List<String>;
+    var registeredCourse = ViewData["regCourse"] as List<String>;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h2>Student Course Summary</h2>
+    <h3>Student ID : @studentModel.StudentId</h3>
+    <hr />
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Registered Course</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var courseName in registeredCourse)
+                    {
+                        <tr>
+                            <td>@courseName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Available Course</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var courseName in allCourse)
+                    {
+                        <tr>
+                            <td>@courseName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+
+       
+
+    </div>
+
+
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

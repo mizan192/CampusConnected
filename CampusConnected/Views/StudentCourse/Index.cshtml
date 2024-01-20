@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CampusConnected.Models.StudentCourse>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registered Student List</h1>
+
+<p>
+    <a asp-action="Create">New Course Registration</a>
+</p>
+
+
+@{
+
+    if (TempData["update_sucess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> @TempData["update_sucess"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    if (TempData["already_reg"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> @TempData["already_reg"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentId)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.StudentId)*@
+                Course Id List
+            </th>
+        </tr>
+    </thead>
+
+
+
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseidList)
+                </td>
+               
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Update Course</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
