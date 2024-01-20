@@ -1,0 +1,69 @@
+﻿@model CampusConnected.Models.ResultSubmission
+
+@{
+    ViewData["Title"] = "Index";
+    var modelData = ViewData["ViewModelData"] as CampusConnected.Models.ResultSubmission;
+}
+
+<style>
+    body {
+        background-color: #f0f0f0; /* Light background color outside the form */
+        color: #333; /* Dark font color */
+    }
+
+    .custom-background {
+        background-color: #f8f8f8; /* Brighter background color for the form */
+        padding: 20px; /* Add padding for better visibility */
+        border-radius: 10px; /* Optional: Add border radius for rounded corners */
+    }
+
+    .custom-form-label {
+        font-size: 16px; /* Font size for form labels */
+        color: #007bff; /* Blue font color for form labels */
+    }
+
+    .custom-form-button {
+        font-size: 18px; /* Font size for form button */
+        color: #ffffff; /* White font color for form button */
+        background-color: #28a745; /* Green background color for form button */
+    }
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 custom-background">
+            <form>
+                <div class="form-group">
+                    <label for="DepartmentId" class="custom-form-label">Select Department:</label>
+                    <select class="form-control" id="departmentList" name="departmentList">
+                        @foreach (var department in modelData.DepartmentList)
+                        {
+                            <option value="@department.DId">@department.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Semester" class="control-label custom-form-label">Select Semester:</label>
+                    <select asp-for="Semester" asp-items="Html.GetEnumSelectList<ResultSubmission.SemesterList>()" class="form-control"></select>
+                    <span asp-validation-for="Semester" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="StudentId" class="custom-form-label">Select StudentID:</label>
+                    <select class="form-control" id="studentList" name="studentList">
+                        @foreach (var std in modelData.StudentList)
+                        {
+                            <option value="@std.StudentId">@std.StudentName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group mt-3">
+                    <button type="button" class="btn btn-primary btn-block custom-form-button">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,7 @@ namespace CampusConnected.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<StudentCourse> studentCourses { get; set; }
+        public DbSet<ResultSubmission> studentResult { get; set; }
 
 
         

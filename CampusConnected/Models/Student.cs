@@ -41,7 +41,6 @@ namespace CampusConnected.Models
             Business,
             Pharmacy
         }
-
         public enum SemesterList
         {
             First,
