@@ -25,7 +25,7 @@ namespace CampusConnected.Models
         [Required] public FacultyList Faculty { get; set; }
 
         public SemesterList Semester { get; set; }  
-
+        public string DepartmentName { get; set; }
 
 
         public enum GenderList
@@ -41,6 +41,7 @@ namespace CampusConnected.Models
             Business,
             Pharmacy
         }
+
         public enum SemesterList
         {
             First,

@@ -12,6 +12,9 @@ namespace CampusConnected.Models
         public int StudentId { get; set; }
         public int CourseId { get; set; }
 
+        public int DepartmentId { get; set; }
+        public SemesterList Semester { get; set; }
+       
         public string CourseidList { get; set; }
 
         [NotMapped]
@@ -23,7 +26,23 @@ namespace CampusConnected.Models
         [NotMapped]
         public List<Student> StudentList { get; set; }
 
-        
+
+       
+
+
+        public enum SemesterList
+        {
+            First,
+            Second,
+            Third,
+            Fourth,
+            Fiveth,
+            Sixth,
+            Seventh,
+            Eighth
+        }
+
+
 
 
 

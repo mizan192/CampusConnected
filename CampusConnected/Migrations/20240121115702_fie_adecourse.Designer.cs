@@ -4,6 +4,7 @@ using CampusConnected.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CampusConnected.Migrations
 {
     [DbContext(typeof(StudentDBContext))]
-    partial class StudentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240121115702_fie_adecourse")]
+    partial class fie_adecourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,22 +104,7 @@ namespace CampusConnected.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AssignmentMarks")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttendenceMarks")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClassTestMarks")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FinalMarks")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MidMarks")
                         .HasColumnType("int");
 
                     b.Property<int>("Semester")
@@ -144,10 +131,6 @@ namespace CampusConnected.Migrations
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()

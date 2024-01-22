@@ -1,0 +1,79 @@
+﻿@model CampusConnected.Models.ResultSubmission
+
+@{
+    ViewData["Title"] = "SubmitResult";
+    var errorData = ViewData["error"];
+    List<string> CourseList = ViewData["CourseList"] as List<string>;
+    var modelData = ViewData["recData"] as CampusConnected.Models.ResultSubmission;
+    var studentId = ViewData["StudentId"];
+    var studentName = ViewData["StudentName"];
+    var departmentId = ViewData["DepartmentId"];
+    var semester = ViewData["Semester"];
+}
+
+
+
+<h3>ResultSubmission Form</h3>
+<h3>Student Information</h3>
+<p>Student ID: @studentId</p>
+<p>Student Name: @studentName</p>
+<p>Department ID: @departmentId</p>
+<p>Semester: @semester</p>
+<hr />
+
+@*TempData["error"] == null*@
+@if (CourseList != null && CourseList.Count > 0 )
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="SubmitResult" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Mid</th>
+                            <th>Final</th>
+                            <th>ClassTest</th>
+                            <th>Assignment</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < CourseList.Count; i++)
+                        {
+                            <tr>
+                                <td>@CourseList[i]</td>
+                                <td><input type="text" name="MidResults[@i]" /></td>
+                                <td><input type="text" name="FinalResults[@i]" /></td>
+                                <td><input type="text" name="ClassTestResults[@i]" /></td>
+                                <td><input type="text" name="AssignmentResults[@i]" /></td>
+                                <td><input type="text" name="AttendanceResults[@i]" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block custom-form-button" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p>No student record found. <br /> Please choose another one.</p>
+}
+
+
+<div>
+    <a asp-action="Index">Select Another Student</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

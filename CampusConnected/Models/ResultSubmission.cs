@@ -12,6 +12,11 @@ namespace CampusConnected.Models
         public int DepartmentId { get; set; }
         public SemesterList Semester { get; set; }
 
+        public int MidMarks { get; set; }   
+        public int FinalMarks { get; set; }
+        public int ClassTestMarks { get; set; }
+        public int AssignmentMarks { get; set; }
+        public int AttendenceMarks { get; set; }
 
         [NotMapped]
         public List<Department> DepartmentList { get; set; }

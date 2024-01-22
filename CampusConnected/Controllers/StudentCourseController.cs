@@ -137,7 +137,10 @@ namespace CampusConnected.Controllers
                 }
                 else
                 {
+                    var studentRec = await studentDB.Students.FirstOrDefaultAsync(s=> s.Id == cur_studentId);
                     std.CourseidList = cur_courseId.ToString();
+                    std.DepartmentId = studentRec.DepartmentId;
+                    std.Semester = (StudentCourse.SemesterList)studentRec.Semester;
                     studentDB.studentCourses.Add(std);
                     await studentDB.SaveChangesAsync(); 
                 }

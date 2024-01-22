@@ -89,7 +89,7 @@ namespace CampusConnected.Controllers
             {
 
                 var dep = studentDB.Departments.FirstOrDefault(d => d.DId == std.DepartmentId);
-
+                std.DepartmentName = dep.Name;
                 //std.DepartmentName = dep.Name;
                 await studentDB.Students.AddAsync(std);
                 await studentDB.SaveChangesAsync();
@@ -132,6 +132,8 @@ namespace CampusConnected.Controllers
             if (id != std.Id) { return NotFound(std); }
             if (std.Id!=null)
             {
+                var dep = studentDB.Departments.FirstOrDefault(d => d.DId == std.DepartmentId);
+                std.DepartmentName = dep.Name;
                 studentDB.Students.Update(std);
                 await studentDB.SaveChangesAsync();
                 TempData["update_sucess"] = "Record Updated Sucessfully!";

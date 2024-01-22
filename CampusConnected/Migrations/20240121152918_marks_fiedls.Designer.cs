@@ -4,6 +4,7 @@ using CampusConnected.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CampusConnected.Migrations
 {
     [DbContext(typeof(StudentDBContext))]
-    partial class StudentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240121152918_marks_fiedls")]
+    partial class marks_fiedls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,10 +146,6 @@ namespace CampusConnected.Migrations
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
