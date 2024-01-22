@@ -260,8 +260,12 @@ namespace CampusConnected.Controllers
            
             if (std.Id != null)
             {
-                studentDB.studentResult.Add(std);
-                studentDB.SaveChanges();
+                var existingRecord = studentDB.studentResult.FirstOrDefault(sr => sr.StudentId == std.StudentId);
+                if (existingRecord == null)
+                {
+                    studentDB.studentResult.Add(std);
+                    studentDB.SaveChanges();
+                }
                 //TempData["viewModelData"] = std;
                 string stdJson = JsonConvert.SerializeObject(std);
 
