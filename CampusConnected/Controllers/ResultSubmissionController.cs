@@ -78,6 +78,9 @@ namespace CampusConnected.Controllers
                 
                 ViewData["recData"] = stdCourseRec;
 
+                TempData["s_Id"] = s_id;
+                TempData["d_Id"] = d_id;
+                
 
 
                 if (stdCourseRec != null)
@@ -86,6 +89,7 @@ namespace CampusConnected.Controllers
                     var stdCourseList = stdCourseRec.CourseidList;
 
                     List<string> CourseList = getCourseList(stdCourseList);
+                    TempData["CourseList"] = CourseList;
                     ViewData["CourseList"] = CourseList;
                     return View();
                 }
@@ -105,66 +109,53 @@ namespace CampusConnected.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SubmitResult(IFormCollection form)
         {
-            // Retrieve other data from ViewData
-            var studentId = ViewData["StudentId"];
-            var departmentId = ViewData["DepartmentId"];
-            var semester = ViewData["Semester"];
+            //var departmentId = ViewData["DepartmentId"] as string;
+            //var semester = ViewData["Semester"] as string;
+            //var studentId = ViewData["StudentId"] as string;
 
-            List<int> midResultsList = new List<int>();
-            List<int> finalResultsList = new List<int>();
-            List<int> classTestResultsList = new List<int>();
-            List<int> attendanceResultsList = new List<int>();
-            List<int> assignmentResultsList = new List<int>();
+            var studentId = form["StudentId"];
+            var departmentId = form["DepartmentId"];
+            var semester = form["Semester"];
+            int s_id = Convert.ToInt32(studentId);
 
-            // Iterate through form keys
+           
+            var stdCourseRec = studentDB.studentCourses.FirstOrDefault(s=>s.StudentId == s_id);
+            var stdCourseList = stdCourseRec.CourseidList;
+
+            List<string> CourseList = getCourseList(stdCourseList);
+
+          
+
+            int numberOfCourses = CourseList.Count;
+            
+            // Arrays to store results
+            int[] midResultsArray = new int[numberOfCourses];
+            int[] finalResultsArray = new int[numberOfCourses];
+            int[] classTestResultsArray = new int[numberOfCourses];
+            int[] assignmentResultsArray = new int[numberOfCourses];
+            int[] attendanceResultsArray = new int[numberOfCourses];
+
+            for (int i = 0; i < numberOfCourses; i++)
+            {
+                // Parse and store values in arrays
+                midResultsArray[i] = Convert.ToInt32(form[$"MidResults[{i}]"]);
+                finalResultsArray[i] = Convert.ToInt32(form[$"FinalResults[{i}]"]);
+                classTestResultsArray[i] = Convert.ToInt32(form[$"ClassTestResults[{i}]"]);
+                assignmentResultsArray[i] = Convert.ToInt32(form[$"AssignmentResults[{i}]"]);
+                attendanceResultsArray[i] = Convert.ToInt32(form[$"AttendanceResults[{i}]"]);
+            }
+
+
+
             //foreach (var key in form.Keys)
             //{
-            //    // Check the prefix of the key and extract the index
-            //    var index = int.Parse(key.Substring("MidResults".Length));
-
-            //    // Determine the type of result based on the key
-            //    if (key.StartsWith("MidResults"))
-            //    {
-            //        var midResult = int.Parse(form[key]);
-            //        midResultsList.Add(midResult);
-            //    }
-            //    else if (key.StartsWith("FinalResults"))
-            //    {
-            //        var finalResult = int.Parse(form[key]);
-            //        finalResultsList.Add(finalResult);
-            //    }
-            //    else if (key.StartsWith("ClassTestResults"))
-            //    {
-            //        var classTestResult = int.Parse(form[key]);
-            //        classTestResultsList.Add(classTestResult);
-            //    }
-            //    else if (key.StartsWith("AttendanceResults"))
-            //    {
-            //        var attendanceResult = int.Parse(form[key]);
-            //        attendanceResultsList.Add(attendanceResult);
-            //    }
-            //    else if (key.StartsWith("AssignmentResults"))
-            //    {
-            //        var assignmentResult = int.Parse(form[key]);
-            //        assignmentResultsList.Add(assignmentResult);
-            //    }
+            //    Console.WriteLine($"{key}: {form[key]}");
             //}
 
-            //// Convert lists to arrays if needed
-            //int[] midResultsArray = midResultsList.ToArray();
-            //int[] finalResultsArray = finalResultsList.ToArray();
-            //int[] classTestResultsArray = classTestResultsList.ToArray();
-            //int[] attendanceResultsArray = attendanceResultsList.ToArray();
-            //int[] assignmentResultsArray = assignmentResultsList.ToArray();
-
-            //for (int i = 0; i < midResultsArray.Length; i++)
-            //{
-            //    Console.WriteLine($"Mid Result {i + 1}: {midResultsArray[i]}");
-            //}
-
-            foreach (var key in form.Keys)
+            Console.WriteLine("--------------mid ----------------");
+            for (int i = 0; i < numberOfCourses; i++)
             {
-                Console.WriteLine($"{key}: {form[key]}");
+                Console.WriteLine(midResultsArray[i]);
             }
 
 
