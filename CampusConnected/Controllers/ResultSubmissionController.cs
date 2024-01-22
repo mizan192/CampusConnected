@@ -129,15 +129,16 @@ namespace CampusConnected.Controllers
             var departmentId = form["DepartmentId"];
             var semester = form["Semester"];
             int s_id = Convert.ToInt32(studentId);
-
+            int dep_id = Convert.ToInt32(departmentId);
+            
            
             var stdCourseRec = studentDB.studentCourses.FirstOrDefault(s=>s.StudentId == s_id);
             var stdCourseList = stdCourseRec.CourseidList;
 
             List<string> CourseList = getCourseList(stdCourseList);
 
-            foreach (var c in CourseList)
-                Console.WriteLine(c);
+            //foreach (var c in CourseList)
+            //    Console.WriteLine(c);
 
 
             int numberOfCourses = CourseList.Count;
@@ -157,10 +158,83 @@ namespace CampusConnected.Controllers
                 classTestResultsArray[i] = Convert.ToInt32(form[$"ClassTestResults[{i}]"]);
                 assignmentResultsArray[i] = Convert.ToInt32(form[$"AssignmentResults[{i}]"]);
                 attendanceResultsArray[i] = Convert.ToInt32(form[$"AttendanceResults[{i}]"]);
+                if (midResultsArray[i] > 30 || midResultsArray[i] < 0) midResultsArray[i] = 0;
+                if (finalResultsArray[i] > 50 || finalResultsArray[i] < 0) finalResultsArray[i] = 0;
+                if (classTestResultsArray[i] > 5 || classTestResultsArray[i] < 0) classTestResultsArray[i] = 0;
+                if (assignmentResultsArray[i] > 5 || assignmentResultsArray[i] < 0) assignmentResultsArray[i] = 0;
+                if (attendanceResultsArray[i] > 10 || attendanceResultsArray[i] < 0) attendanceResultsArray[i] = 0;
             }
 
             //2351
+            //column value is like : 
+            //course_id:marks,Course_id:marks
+
+            string midResult = "";
+            string finalResult = "";
+            string classTestResult = "";
+            string assignmentResult = "";
+            string attendanceResult = "";
             
+            string[] courseIdStrings = stdCourseList.Split(',');
+  
+            for(int i = 0; i < numberOfCourses; i++)
+            {
+                midResult += courseIdStrings[i] + ":" + midResultsArray[i].ToString();
+                finalResult += courseIdStrings[i] + ":" + finalResultsArray[i].ToString();
+                classTestResult += courseIdStrings[i] + ":" + classTestResultsArray[i].ToString();
+                assignmentResult += courseIdStrings[i] + ":" + assignmentResultsArray[i].ToString();
+                attendanceResult += courseIdStrings[i] + ":" + attendanceResultsArray[i].ToString();
+                if (i + 1 < numberOfCourses)
+                {
+                    midResult += ",";
+                    finalResult += ",";
+                    classTestResult += ",";
+                    assignmentResult += ",";
+                    attendanceResult += ",";
+
+                }
+            }
+
+            var existingRecord = studentDB.studentResult.FirstOrDefault(sr => sr.StudentId == s_id);
+
+            if (existingRecord != null)
+            {
+                existingRecord.MidMarks = midResult;
+                existingRecord.FinalMarks = finalResult;
+                existingRecord.ClassTestMarks =classTestResult ;
+                existingRecord.AssignmentMarks = assignmentResult;
+                existingRecord.AttendenceMarks = attendanceResult;
+            }
+            else
+            {
+                var newRecord = new ResultSubmission
+                {
+                    StudentId = s_id,
+                    //DepartmentId = dep_id,
+                    MidMarks = midResult,
+                    FinalMarks=finalResult,
+                    ClassTestMarks=classTestResult,
+                    AssignmentMarks=assignmentResult,
+                    AttendenceMarks=attendanceResult,
+                };
+                if (semester == "First") newRecord.Semester = ResultSubmission.SemesterList.First;
+                else if (semester == "Second") newRecord.Semester = ResultSubmission.SemesterList.Second;
+                else if (semester == "Third") newRecord.Semester = ResultSubmission.SemesterList.Third;
+                else if (semester == "Fourth") newRecord.Semester = ResultSubmission.SemesterList.Fourth;
+                else if (semester == "Fiveth") newRecord.Semester = ResultSubmission.SemesterList.Fiveth;
+                else if (semester == "Sixth") newRecord.Semester = ResultSubmission.SemesterList.Sixth;
+                else if (semester == "Seventh") newRecord.Semester = ResultSubmission.SemesterList.Seventh;
+                else if (semester == "Eighth") newRecord.Semester = ResultSubmission.SemesterList.Eighth;
+                else newRecord.Semester = ResultSubmission.SemesterList.First;
+
+                studentDB.studentResult.Add(newRecord);
+            }
+
+            studentDB.SaveChanges();
+
+
+
+
 
             //foreach (var key in form.Keys)
             //{
@@ -186,6 +260,8 @@ namespace CampusConnected.Controllers
            
             if (std.Id != null)
             {
+                studentDB.studentResult.Add(std);
+                studentDB.SaveChanges();
                 //TempData["viewModelData"] = std;
                 string stdJson = JsonConvert.SerializeObject(std);
 

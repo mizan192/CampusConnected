@@ -11,18 +11,21 @@ namespace CampusConnected.Models
         public int StudentId { get; set; }
         public int DepartmentId { get; set; }
         public SemesterList Semester { get; set; }
-
-        public int MidMarks { get; set; }   
-        public int FinalMarks { get; set; }
-        public int ClassTestMarks { get; set; }
-        public int AssignmentMarks { get; set; }
-        public int AttendenceMarks { get; set; }
+        
+        //column value is like : 
+        //course_id:marks,Course_id:marks
+        public string MidMarks { get; set; }   
+        public string FinalMarks { get; set; }
+        public string ClassTestMarks { get; set; }
+        public string AssignmentMarks { get; set; }
+        public string AttendenceMarks { get; set; }
 
         [NotMapped]
         public List<Department> DepartmentList { get; set; }
 
         [NotMapped]
         public List<Student> StudentList { get; set; }
+       
         public enum SemesterList
         {
             First,
