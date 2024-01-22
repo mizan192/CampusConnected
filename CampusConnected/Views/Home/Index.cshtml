@@ -73,7 +73,7 @@
     <tbody>
         @foreach (var (item, index) in Model.Select((value, i) => (value, i)))
         {
-            <tr class="@(index % 2 == 0 ? "bg-light" : "bg-info")">
+            <tr class="@(index % 2 == 0 ? "bg-light" : "bg-light")">
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>

@@ -4,26 +4,26 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1 style="color: #007bff;">Create</h1>
 
-<h4>Course</h4>
+<h4 style="color: #007bff;">Course</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CourseName" class="control-label"></label>
+                <label asp-for="CourseName" class="control-label" style="color: #343a40;">Course Name</label>
                 <input asp-for="CourseName" class="form-control" />
                 <span asp-validation-for="CourseName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CourseCode" class="control-label"></label>
+                <label asp-for="CourseCode" class="control-label" style="color: #343a40;">Course Code</label>
                 <input asp-for="CourseCode" class="form-control" />
                 <span asp-validation-for="CourseCode" class="text-danger"></span>
             </div>
-           <div class="form-group mb-3">
-                <label asp-for="Faculty" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="Faculty" class="control-label" style="color: #343a40;">Faculty</label>
                 <select asp-for="Faculty" asp-items="Html.GetEnumSelectList<Course.FacultyList>()" class="form-control"></select>
                 <span asp-validation-for="Faculty" class="text-danger"></span>
             </div>
@@ -35,9 +35,11 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" style="color: #007bff;">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
