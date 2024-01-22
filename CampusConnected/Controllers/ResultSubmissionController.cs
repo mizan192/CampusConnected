@@ -43,14 +43,26 @@ namespace CampusConnected.Controllers
             int[] courseIdArray = courseIdStrings.Select(int.Parse).ToArray();
 
             var courses = studentDB.Courses.ToList();
-
+            Dictionary<int, string> myDictionary = new Dictionary<int, string>();
             foreach (var course in courses)
             {
                 int courseId = course.CId;
                 if (courseIdArray.Contains(courseId))
-                    cList.Add(course.CourseName);
+                {
+                    string nameofCourse = course.CourseName;
+                    myDictionary.Add(courseId, nameofCourse);
+                }
             }
+            
+            foreach (int num in courseIdArray)
+            {
+                string coursename = myDictionary[num];
+                cList.Add(coursename);
+            }
+
             return cList;
+
+            //for showing and storing course with registration serile and for storing marks in this serial
         }
 
 
@@ -124,7 +136,9 @@ namespace CampusConnected.Controllers
 
             List<string> CourseList = getCourseList(stdCourseList);
 
-          
+            foreach (var c in CourseList)
+                Console.WriteLine(c);
+
 
             int numberOfCourses = CourseList.Count;
             
@@ -145,21 +159,22 @@ namespace CampusConnected.Controllers
                 attendanceResultsArray[i] = Convert.ToInt32(form[$"AttendanceResults[{i}]"]);
             }
 
-
+            //2351
+            
 
             //foreach (var key in form.Keys)
             //{
             //    Console.WriteLine($"{key}: {form[key]}");
             //}
 
-            Console.WriteLine("--------------mid ----------------");
-            for (int i = 0; i < numberOfCourses; i++)
-            {
-                Console.WriteLine(midResultsArray[i]);
-            }
 
+            //for (int i = 0; i < numberOfCourses; i++)
+            //{
+            //    Console.WriteLine(midResultsArray[i]);
+            //}
 
-            return View();
+            return RedirectToAction("Index", "ResultSubmission");
+            //return View();
         }
 
 
