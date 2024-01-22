@@ -129,7 +129,7 @@ namespace CampusConnected.Controllers
             var departmentId = form["DepartmentId"];
             var semester = form["Semester"];
             int s_id = Convert.ToInt32(studentId);
-            int dep_id = Convert.ToInt32(departmentId);
+            //int dep_id = Convert.ToInt32(departmentId);
             
            
             var stdCourseRec = studentDB.studentCourses.FirstOrDefault(s=>s.StudentId == s_id);
